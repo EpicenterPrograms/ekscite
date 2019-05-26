@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+	<head>
+		<base target="_parent">
+		<link rel="stylesheet" href="https://epicenterprograms.github.io/standards/formatting/foundation.css">
+	</head>
+	<body class="navigation bigger">
+		<h2>
+			Contents
+		</h2>
+		<ul id="contentsList"></ul>
+		<script>
+			// sets the contents
+			var navigationContents = [  // [page URL, title]
+				
+			];
+			navigationContents.forEach(function (pair) {
+				let listItem = document.createElement("li");
+				let hiddenListItem = document.createElement("li");  // allows bolding without shifting the list
+				hiddenListItem.className = "nav-list-expander";
+				if (pair[0].constructor === Array) {  // if the item should be expandable
+					listItem.className = "expandable";
+					let itemHTML;
+					pair.forEach(function (subpair, index) {
+						if (index === 0) {  // if it's the displayed item
+							itemHTML = "<a href='" + subpair[0] + "'>" + subpair[1] + "</a><ul>";
+						} else {
+							itemHTML += "<li><a href='" + subpair[0] + "'>" + subpair[1] + "</a></li>";
+						}
+					});
+					itemHTML += "</ul>";
+					listItem.innerHTML = itemHTML;
+					document.getElementById("contentsList").appendChild(listItem);
+					hiddenListItem.innerHTML = itemHTML;
+					document.getElementById("contentsList").appendChild(hiddenListItem);
+				} else {
+					listItem.innerHTML = "<a href='" + pair[0] + "'>" + pair[1] + "</a>";
+					document.getElementById("contentsList").appendChild(listItem);
+					hiddenListItem.innerHTML = pair[1];
+					document.getElementById("contentsList").appendChild(hiddenListItem);
+				}
+			});
+		</script>
+	</body>
+</html>
